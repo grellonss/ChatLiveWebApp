@@ -1,4 +1,4 @@
-
+/* 
 import React, { useEffect, useRef } from 'react';
 import Message from './Message';
 import useGetMessages from '../../hooks/useGetMessages';
@@ -11,8 +11,11 @@ const Messages = () => {
   const lastMessageRef = useRef();
 
   useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({behavior: "smooth"});
+    })
     if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, selectedConversation]);
 
@@ -21,7 +24,7 @@ const Messages = () => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }); // Update when selectedConversation changes */
+  }); // Update when selectedConversation changes 
 
   return (
     <div className='px-4 flex-1 overflow-auto'>
@@ -38,8 +41,41 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default Messages; */
 
+import { useEffect, useRef } from 'react'
+import Message from './Message'
+import useGetMessages from '../../hooks/useGetMessages';
+import MessageSkeleton from '../skeletons/MessageSkeleton';
+import useListenMessages from '../../hooks/useListenMessages';
+
+const Messages = () => {
+  const {messages,loading} = useGetMessages();
+  useListenMessages();
+  const lastMessageRef = useRef();
+  
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100); // Impostato un timeout di 100 millisecondi
+  
+    return () => clearTimeout(timeoutId);
+  },[messages]);
+  return (
+    <div className='px-4 flex-1 overflow-auto'>
+        {!loading  && messages.length > 0 && messages.map((message) => (
+          <div key={message._id} ref={lastMessageRef}>
+            <Message  message={message} />
+            </div>
+        )) }
+        {loading && [...Array(3)].map((_,idx) => <MessageSkeleton key={idx} />)}
+
+        {!loading && messages.length === 0 && (
+          <p className='text-center'>Send a message to start the conversation</p>
+        )}
+    </div>
+  );
+};export default Messages;
 
 /* import { useEffect, useRef } from 'react'
 import Message from './Message'
@@ -72,4 +108,4 @@ const Messages = () => {
     </div>
   );
 };export default Messages;
-*/
+ */
