@@ -14,14 +14,14 @@ const Messages = () => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
+  }, [messages, selectedConversation]);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     // Scroll to bottom when conversation changes
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [selectedConversation]); // Update when selectedConversation changes
+  }); // Update when selectedConversation changes */
 
   return (
     <div className='px-4 flex-1 overflow-auto'>
