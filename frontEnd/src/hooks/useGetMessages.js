@@ -1,4 +1,44 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import useConversation from '../zustand/useConversation';
+
+const useGetMessages = () => {
+  const [loading, setLoading] = useState(false);
+  const { messages, setMessages, selectedConversation } = useConversation();
+
+  useEffect(() => {
+    const getMessages = async () => {
+      setLoading(true);
+      try {
+        if (!selectedConversation) return; // Exit early if no conversation selected
+
+        const res = await fetch(`/api/messages/${selectedConversation._id}`);
+
+        const data = await res.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        setMessages(data);
+
+      } catch (error) {
+        toast.error(error.message);
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getMessages();
+  }, [selectedConversation, setMessages]); // Include selectedConversation in dependencies
+
+  return { messages, loading };
+};
+
+export default useGetMessages;
+
+
+/* import React, { useState } from 'react'
 import useConversation from '../zustand/useConversation';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
@@ -35,4 +75,4 @@ const useGetMessages = () => {
   return {messages,loading};
 }
 
-export default useGetMessages;
+export default useGetMessages; */
