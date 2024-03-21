@@ -1,5 +1,4 @@
-
-
+/* 
 import React, { useEffect, useRef } from 'react';
 import Message from './Message';
 import useGetMessages from '../../hooks/useGetMessages';
@@ -31,9 +30,9 @@ const Messages = () => {
 };
 
 export default Messages;
+ */
 
-
-/* import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Message from './Message'
 import useGetMessages from '../../hooks/useGetMessages';
 import MessageSkeleton from '../skeletons/MessageSkeleton';
@@ -66,4 +65,4 @@ const Messages = () => {
 }
 
 export default Messages;
-  */
+ 
