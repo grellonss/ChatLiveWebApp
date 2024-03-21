@@ -1,4 +1,5 @@
-/* 
+
+
 import React, { useEffect, useRef } from 'react';
 import Message from './Message';
 import useGetMessages from '../../hooks/useGetMessages';
@@ -7,24 +8,12 @@ import useConversation from '../../zustand/useConversation';
 
 const Messages = () => {
   const { messages, loading } = useGetMessages();
-  const { selectedConversation } = useConversation();
   const lastMessageRef = useRef();
+  const { selectedConversation } = useConversation();
 
   useEffect(() => {
-    setTimeout(() => {
-      lastMessageRef.current?.scrollIntoView({behavior: "smooth"});
-    })
-    if (lastMessageRef.current) {
-      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, selectedConversation]);
-
- /*  useEffect(() => {
-    // Scroll to bottom when conversation changes
-    if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }); // Update when selectedConversation changes 
+    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className='px-4 flex-1 overflow-auto'>
@@ -41,9 +30,10 @@ const Messages = () => {
   );
 };
 
-export default Messages; */
+export default Messages;
 
-import { useEffect, useRef } from 'react'
+
+/* import { useEffect, useRef } from 'react'
 import Message from './Message'
 import useGetMessages from '../../hooks/useGetMessages';
 import MessageSkeleton from '../skeletons/MessageSkeleton';
@@ -76,4 +66,4 @@ const Messages = () => {
 }
 
 export default Messages;
- 
+  */
